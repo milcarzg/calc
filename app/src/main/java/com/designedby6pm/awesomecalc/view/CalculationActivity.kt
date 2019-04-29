@@ -9,7 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.designedby6pm.awesomecalc.R
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class CalculationActivity : AppCompatActivity() {
@@ -26,6 +28,7 @@ class CalculationActivity : AppCompatActivity() {
 
     //textView for server response
     lateinit var response: TextView
+    lateinit var loadResponse: TextView
 
     //flag if dot was already used
     var flagDot: Boolean = false
@@ -34,7 +37,7 @@ class CalculationActivity : AppCompatActivity() {
     var flagNumber = false
 
     // temporary storage
-    var currentCalc = Calculation("",null,false, Date())
+    lateinit var currentCalc: Calculation
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +45,7 @@ class CalculationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         input = findViewById(R.id.textView_Input)
         response = findViewById(R.id.textView_response)
+        loadResponse = findViewById(R.id.textView_load_response)
     }
 
 
@@ -91,19 +95,20 @@ class CalculationActivity : AppCompatActivity() {
     /**
      * Press Delete
      */
-    fun onDelete(view: View) {
+    fun onDelete(@Suppress("UNUSED_PARAMETER") view: View) {
         input.text = ""
         flagNumber = false
         flagDot = false
         currentCalc.reset()
+        response.text = ""
     }
 
     /**
      * Press Equals
      */
-    fun onEquals (view: View) {
+    fun onEquals(@Suppress("UNUSED_PARAMETER")view: View) {
         if (flagNumber) {
-            currentCalc.calculation = input.text.toString()
+            currentCalc = Calculation(input.text.toString(), null, false, Date())
             // Create an Expression (A class from exp4j library)
             try {
                 // Calculate the result and display
@@ -123,10 +128,12 @@ class CalculationActivity : AppCompatActivity() {
     /**
      * Press Save
      */
-    fun onSave(view : View) {
+    fun onSave(@Suppress("UNUSED_PARAMETER")view : View) {
         if (currentCalc.calculation.isNotEmpty() && currentCalc.result != null && !currentCalc.saved) {
             // Add a new document with a generated ID
             currentCalc.saved = true
+            currentCalc.date = Date()
+            response.setText(R.string.saving)
             db.collection("calculations")
                 .add(currentCalc)
                 .addOnSuccessListener { documentReference ->
@@ -142,5 +149,21 @@ class CalculationActivity : AppCompatActivity() {
             response.setText(R.string.save_not)
             Toast.makeText(this, "complete calculation - nothing to save", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun onLoad(@Suppress("UNUSED_PARAMETER")view: View) {
+        db.collection("calculations").orderBy("date", Query.Direction.DESCENDING).limit(1).get()
+            .addOnSuccessListener { loadCalc ->
+                if (loadCalc != null) {
+                    Log.d(TAG, "DocumentSnapshot data: ${loadCalc.documents.get(0).data}")
+                    var loadedCalculation: Calculation? = loadCalc.documents[0].toObject(Calculation::class.java)
+                    loadResponse.text = loadedCalculation?.calculation + " = " + loadedCalculation?.result.toString()
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
     }
 }

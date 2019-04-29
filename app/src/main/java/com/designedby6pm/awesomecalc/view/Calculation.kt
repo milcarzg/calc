@@ -3,10 +3,13 @@ package com.designedby6pm.awesomecalc.view
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.util.*
 
-data class Calculation (var calculation: String = "",
-                        var result: Double? = null,
-                        var saved: Boolean = false,
-                        var date: Date) {
+class Calculation(var calculation: String = "",
+                       var result: Double? = null,
+                       var saved: Boolean = false,
+                       var date: Date) {
+
+    constructor() : this("", null,false, Date())
+
 
     fun calculate() {
         result = ExpressionBuilder(calculation).build().evaluate()
@@ -19,4 +22,5 @@ data class Calculation (var calculation: String = "",
         date = Date()
     }
 }
+
 

@@ -24,13 +24,15 @@
     <!-- extras -->
     <string name="clear">Clear</string>
     <string name="dot">.</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
+    <string name="load">Load</string>
     <string name="delete">Delete</string>
 
     <!-- errors -->
     <string name="dot_error">Number missing or dot already used</string>
 
     <!-- responses -->
+    <string name="saving">Saving...</string>
     <string name="saved">Saved</string>
     <string name="save_not">Not Saved</string>
     <string name="save_error">Error Saving</string>
