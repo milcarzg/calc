@@ -135,11 +135,11 @@ class CalculationActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
-                    response.setText("Error Saving")
+                    response.setText(R.string.save_error)
                     currentCalc.saved = false
                 }
         } else {
-            response.setText(R.string.not_saved)
+            response.setText(R.string.save_not)
             Toast.makeText(this, "complete calculation - nothing to save", Toast.LENGTH_SHORT).show()
         }
     }

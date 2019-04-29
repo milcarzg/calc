@@ -32,5 +32,6 @@
 
     <!-- responses -->
     <string name="saved">Saved</string>
-    <string name="not_saved">Not Saved</string>
+    <string name="save_not">Not Saved</string>
+    <string name="save_error">Error Saving</string>
 </resources>
