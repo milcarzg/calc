@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "14459989931",
+    "firebase_url": "https://awesomecalc-6pm.firebaseio.com",
+    "project_id": "awesomecalc-6pm",
+    "storage_bucket": "awesomecalc-6pm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14459989931:android:a3afba3deae55863",
+        "android_client_info": {
+          "package_name": "com.designedby6pm.awesomecalc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14459989931-kf58sidvg7lgh77engqacc89fr1t4s95.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxupozgDyvEp9xHhNOdua1bK4S_7m6AEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14459989931-kf58sidvg7lgh77engqacc89fr1t4s95.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
